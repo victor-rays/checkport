@@ -12,7 +12,7 @@ app.config.REAL_IP_HEADER = "Fly-Client-IP"
 
 @app.route('/<path:path>')
 async def index(request, path=""):
-    return json({"msg": "I'm a Teapot"}, 418)
+    return json({"msg": "I'm a teapot"}, 418)
 
 @app.get('/health')
 async def health_check(request):
