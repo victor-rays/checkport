@@ -52,7 +52,7 @@ _Note: The IP-address are examples in accordance with [RFC3849][rfc-3849] & [RFC
 
 I've used [Sanic](https://sanic.dev/en/) webserver and the Python [Socket](https://docs.python.org/3/library/socket.html) low-level library to reduce the data usage for each request as much as possible.
 
-If you want to deploy one yourself as a Docker image you can build one using the Docker file, otherwise you need to install the dependencies in the `requirements.txt` file. 
+If you want to deploy one yourself as a Docker image you can build one using the Dockerfile, otherwise you need to install the dependencies in the `requirements.txt` file. 
 
 ```
 # USERNAME: Username at the Docker Hub image registry
