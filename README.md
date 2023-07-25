@@ -7,11 +7,11 @@ It checks if the port-forwarding has been done properly and the device is reacha
 It does this by trying to open a TCP socket connection to port `80` & `443` on the client IP that is sending a HTTP GET request to the `/check` endpoint of the application.
 
 Returns JSON response body with the following information:
-    **§** ip:     Client IP
-    **§** format: valid / invalid / error
-    **§** type:   IPv4 / IPv6
-    **§** 80:     open / closed
-    **§** 443:    open / closed
++ **§** ip:     Client IP
++ **§** format: valid / invalid / error
++ **§** type:   IPv4 / IPv6
++ **§** 80:     open / closed
++ **§** 443:    open / closed
 
 Ex. A HTTP GET request over TCP to the applications '/check' endpoint.
 
