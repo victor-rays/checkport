@@ -1,5 +1,6 @@
 # Fly.io toml file
 fly.toml
+.dockerignore
 
 # Deta Space
 .space

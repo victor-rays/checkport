@@ -5,6 +5,8 @@
 **/*.ap_
 **/*.aab
 
+.gitignore
+
 # Files for the ART/Dalvik VM
 **/*.dex
 
