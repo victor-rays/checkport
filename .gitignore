@@ -2,6 +2,8 @@
 fly.toml
 .dockerignore
 
+__pycache__
+
 # Deta Space
 .space
 
