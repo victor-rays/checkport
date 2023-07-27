@@ -8,10 +8,10 @@ It does this by trying to open a TCP socket connection to port `80` & `443` on t
 
 Returns JSON response body with the following information:
 + **§** `ip`:     Client IP
-+ **§** `format`: `valid` | `invalid` | `error`
-+ **§** `type`:   `IPv4` | `IPv6`
-+ **§** `80`:     `open` | `closed`
-+ **§** `443`:    `open` | `closed`
++ **§** `format`: valid | invalid | error
++ **§** `type`:   IPv4 | IPv6
++ **§** `80`:     open | closed
++ **§** `443`:    open | closed
 
 **§** Clone the repository
 
