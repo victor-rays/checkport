@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Victor-ray, S.
+# § Victor-ray, S.
 
 from sanic import Sanic
 from sanic.response import json
@@ -21,22 +21,24 @@ async def health_check(request):
 @app.get('/check')
 async def check_ports(request):
     headers = request.headers
-    clientIP = headers.get("Fly-Client-IP")
+    client_ip = headers.get("Fly-Client-IP")
+    if client_ip is None:
+        client_ip = request.ip
     protocol = ("")
     port80 = ("")
     port443 = ("")
     try:
-      validate = await validateIP(clientIP)
+      validate = await validate_ip(client_ip)
       if validate == 0:
         result = "valid"
-        if await getIPversion(clientIP) == 4:
+        if await get_ip_version(client_ip) == 4:
           protocol = "IPv4"
-          port80 = await checkIPv4(clientIP, 80)
-          port443 = await checkIPv4(clientIP, 443)
+          port80 = await check_ip_v4(client_ip, 80)
+          port443 = await check_ip_v4(client_ip, 443)
         else:
           protocol = "IPv6"
-          port80 = await checkIPv6(clientIP, 80)
-          port443 = await checkIPv6(clientIP, 443)
+          port80 = await check_ip_v6(client_ip, 80)
+          port443 = await check_ip_v6(client_ip, 443)
       elif validate == 1:
         result = "invalid"
       else:
@@ -44,30 +46,32 @@ async def check_ports(request):
     except:
       result = "error"
     return json({
-      "ip": clientIP,
+      "ip": client_ip,
       "format": result,
       "type": protocol,
       "80": port80,
       "443": port443
-    })
+    }, 200)
 
 @app.get('/80')
 async def check_port_80(request):
     headers = request.headers
-    clientIP = headers.get("Fly-Client-IP")
+    client_ip = headers.get("Fly-Client-IP")
+    if client_ip is None:
+        client_ip = request.ip
     protocol = ("")
     port80 = ("")
     port443 = ("")
     try:
-      validate = await validateIP(clientIP)
+      validate = await validate_ip(client_ip)
       if validate == 0:
         result = "valid"
-        if await getIPversion(clientIP) == 4:
+        if await get_ip_version(client_ip) == 4:
           protocol = "IPv4"
-          port80 = await checkIPv4(clientIP, 80)
+          port80 = await check_ip_v4(client_ip, 80)
         else:
           protocol = "IPv6"
-          port80 = await checkIPv6(clientIP, 80)
+          port80 = await check_ip_v6(client_ip, 80)
       elif validate == 1:
         result = "invalid"
       else:
@@ -75,29 +79,31 @@ async def check_port_80(request):
     except:
       result = "error"
     return json({
-      "ip": clientIP,
+      "ip": client_ip,
       "format": result,
       "type": protocol,
       "80": port80
-    })
+    }, 200)
 
 @app.get('/443')
 async def check_port_443(request):
     headers = request.headers
-    clientIP = headers.get("Fly-Client-IP")
+    client_ip = headers.get("Fly-Client-IP")
+    if client_ip is None:
+        client_ip = request.ip
     protocol = ("")
     port80 = ("")
     port443 = ("")
     try:
-      validate = await validateIP(clientIP)
+      validate = await validate_ip(client_ip)
       if validate == 0:
         result = "valid"
-        if await getIPversion(clientIP) == 4:
+        if await get_ip_version(client_ip) == 4:
           protocol = "IPv4"
-          port443 = await checkIPv4(clientIP, 443)
+          port443 = await check_ip_v4(client_ip, 443)
         else:
           protocol = "IPv6"
-          port80 = await checkIPv6(clientIP, 443)
+          port80 = await check_ip_v6(client_ip, 443)
       elif validate == 1:
         result = "invalid"
       else:
@@ -105,7 +111,7 @@ async def check_port_443(request):
     except:
       result = "error"
     return json({
-      "ip": clientIP,
+      "ip": client_ip,
       "format": result,
       "type": protocol,
       "443": port443
@@ -115,15 +121,17 @@ async def check_port_443(request):
 async def get_client_ip(request):
     try:
       headers = request.headers
-      clientIP = headers.get("Fly-Client-IP")
-      message = json({"ip":clientIP})
+      client_ip = headers.get("Fly-Client-IP")
+      if client_ip is None:
+        client_ip = request.ip
+      message = json({"ip": client_ip})
     except:
-      message = json({"message":"error"})
+      message = json({"message": "error"})
     return message
 
-async def validateIP(incomingIP):
+async def validate_ip(incoming_ip):
     try:
-      ip = ipaddress.ip_address(incomingIP)
+      ip = ipaddress.ip_address(incoming_ip)
       validation = 0
     except ValueError:
       validation = 1
@@ -131,9 +139,9 @@ async def validateIP(incomingIP):
       validation = -1
     return validation
 
-async def getIPversion(theIP):
+async def get_ip_version(incoming_ip):
     try:
-      ip = ipaddress.ip_address(theIP)
+      ip = ipaddress.ip_address(incoming_ip)
       if isinstance(ip, ipaddress.IPv4Address):
         protocol = 4
       elif isinstance(ip, ipaddress.IPv6Address):
@@ -142,11 +150,11 @@ async def getIPversion(theIP):
       protocol = "error"
     return protocol
 
-async def checkIPv4(IPv4, portIPv4):
+async def check_ip_v4(IPv4, portIPv4):
     try:
       IPv4socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
       IPv4socket.settimeout(1.5)
-      IPv4socket.connect((IPv4,int(portIPv4)))
+      IPv4socket.connect(( IPv4, int(portIPv4) ))
       result = "open"
     except:
       result = "closed"
@@ -154,11 +162,11 @@ async def checkIPv4(IPv4, portIPv4):
       IPv4socket.close()
     return result
 
-async def checkIPv6(IPv6, portIPv6):
+async def check_ip_v6(IPv6, portIPv6):
     try:
       IPv6socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
       IPv6socket.settimeout(1.5)
-      IPv6socket.connect((IPv6,int(portIPv6)))
+      IPv6socket.connect(( IPv6, int(portIPv6) ))
       result = "open"
     except:
       result = "closed"
@@ -167,4 +175,8 @@ async def checkIPv6(IPv6, portIPv6):
     return result
 
 if __name__ == "__main__":
-  app.run(host='::',port=8080,fast=True)
+  app.run(
+    host='::',
+    port=8080,
+    fast=True
+  )
