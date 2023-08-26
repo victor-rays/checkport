@@ -12,11 +12,11 @@ app.config.REAL_IP_HEADER = "Fly-Client-IP"
 
 @app.route('/<path:path>')
 async def index(request, path=""):
-    return json({"msg": "I'm a teapot"}, 418)
+    return json({"message": "I'm a teapot"}, 418)
 
 @app.get('/health')
 async def health_check(request):
-    return json({"msg": "OK"}, 200)
+    return json({"message": "OK"}, 200)
 
 @app.get('/check')
 async def check_ports(request):
@@ -117,18 +117,6 @@ async def check_port_443(request):
       "443": port443
     }, 200)
 
-@app.get('/client')
-async def get_client_ip(request):
-    try:
-      headers = request.headers
-      client_ip = headers.get("Fly-Client-IP")
-      if client_ip is None:
-        client_ip = request.ip
-      message = json({"ip": client_ip})
-    except:
-      message = json({"message": "error"})
-    return message
-
 async def validate_ip(incoming_ip):
     try:
       ip = ipaddress.ip_address(incoming_ip)
@@ -178,5 +166,6 @@ if __name__ == "__main__":
   app.run(
     host='::',
     port=8080,
+    access_log=False,
     fast=True
   )
