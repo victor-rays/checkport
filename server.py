@@ -7,7 +7,7 @@ from sanic.response import text
 import ipaddress
 import socket
 
-app = Sanic("portcheck")
+app = Sanic("checkport")
 app.config.REAL_IP_HEADER = "Fly-Client-IP"
 
 @app.route('/<path:path>')

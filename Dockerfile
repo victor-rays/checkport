@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # Author § Victor-ray, S.
-FROM sanicframework/sanic:LTS
+FROM sanicframework/sanic:lts-py3.11
 COPY ./server.py ./requirements.txt /srv/
 RUN pip install --no-cache --upgrade pip; pip install --no-cache -r /srv/requirements.txt
 EXPOSE 8080
