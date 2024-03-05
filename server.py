@@ -61,7 +61,6 @@ async def check_port_80(request):
         client_ip = request.ip
     protocol = ("")
     port80 = ("")
-    port443 = ("")
     try:
       validate = await validate_ip(client_ip)
       if validate == 0:
@@ -92,7 +91,6 @@ async def check_port_443(request):
     if client_ip is None:
         client_ip = request.ip
     protocol = ("")
-    port80 = ("")
     port443 = ("")
     try:
       validate = await validate_ip(client_ip)
@@ -103,7 +101,7 @@ async def check_port_443(request):
           port443 = await check_ip_v4(client_ip, 443)
         else:
           protocol = "IPv6"
-          port80 = await check_ip_v6(client_ip, 443)
+          port443 = await check_ip_v6(client_ip, 443)
       elif validate == 1:
         result = "invalid"
       else:
