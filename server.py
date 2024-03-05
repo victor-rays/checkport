@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# § Victor-ray, S.
+# § Victor-ray, S. owl@zendai.net.eu.org
 
 from sanic import Sanic
 from sanic.response import json
@@ -126,14 +126,11 @@ async def validate_ip(incoming_ip):
     return validation
 
 async def get_ip_version(incoming_ip):
-    try:
-      ip = ipaddress.ip_address(incoming_ip)
-      if isinstance(ip, ipaddress.IPv4Address):
+    ip = ipaddress.ip_address(incoming_ip)
+    if isinstance(ip, ipaddress.IPv4Address):
         protocol = 4
-      elif isinstance(ip, ipaddress.IPv6Address):
+    elif isinstance(ip, ipaddress.IPv6Address):
         protocol = 6
-    except:
-      protocol = "error"
     return protocol
 
 async def check_ip_v4(IPv4, portIPv4):
