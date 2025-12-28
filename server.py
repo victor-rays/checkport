@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# § Victor-ray, S. owl@zendai.net.eu.org
+# § Victor-ray, S. git@zendai.net.eu.org
 
 from sanic import Sanic
 from sanic.response import json
