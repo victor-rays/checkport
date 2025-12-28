@@ -6,17 +6,17 @@ It checks if the port-forwarding has been done properly and the device is reacha
 
 It does this by trying to open a TCP socket connection to port `80` & `443` on the client IP that is sending a HTTP GET request to the `/check` endpoint of the application.
 
-Returns JSON response body with the following information:
-+ **§** `ip`:     Client IP
-+ **§** `format`: valid | invalid | error
-+ **§** `type`:   IPv4 | IPv6
-+ **§** `80`:     open | closed
-+ **§** `443`:    open | closed
+Returns a JSON response with the following information:  
+- `ip`:     Client IP  
+- `format`: valid | invalid | error  
+- `type`:   IPv4 | IPv6  
+- `80`:     open | closed  
+- `443`:    open | closed  
 
 **§** Clone the repository
 
 ```bash
-git clone https://github.com/ZendaiOwl/checkport
+git clone https://github.com/victor-rays/checkport
 ```
 
 **§** Create a virtual environment with `venv`
@@ -59,16 +59,17 @@ curl --silent https://localhost:8080/check
 
 Receives the following response.
 
-_Note: The IP-address are examples in accordance with [RFC3849][rfc-3849] & [RFC5737][rfc-5737]._
+_Note: The IP-address are examples in accordance with [RFC9637][rfc-9637] & [RFC5737][rfc-5737]._ 
 
 [rfc-3849]: https://datatracker.ietf.org/doc/rfc3849
 [rfc-5737]: https://datatracker.ietf.org/doc/rfc5737
+[rfc-9637]: https://datatracker.ietf.org/doc/rfc9637/ 
 
-+ **§** IPv6
++ IPv6
 
 ```json
 {
-  "ip": "2001:DB8::C200:2B46",
+  "ip": "3fff:0DB8::C200:2B46",
   "format": "valid",
   "type": "IPv6",
   "80": "closed",
@@ -76,7 +77,7 @@ _Note: The IP-address are examples in accordance with [RFC3849][rfc-3849] & [RFC
 }
 ```
 
-+ **§** IPv4
++ IPv4
 
 ```json
 {
@@ -131,4 +132,3 @@ Or if you want to use the one I've built
 docker pull zendai/checkport:sanic
 docker run --rm --detach --publish 8080:8080 zendai/checkport:sanic
 ```
-
