@@ -16,7 +16,7 @@ Returns a JSON response with the following information:
 **§** Clone the repository
 
 ```bash
-git clone https://github.com/victor-rays/checkport
+git clone https://github.com/n0rs3/checkport
 ```
 
 **§** Create a virtual environment with `venv`
